@@ -1,6 +1,6 @@
 import About from "../components/About";
 import CTA from "../components/CTA";
-import Event from "../components/Event";
+import Events from "../components/Events";
 import Gallery from "../components/Gallery";
 import HeroHeader from "../components/HeroHeader";
 import Story from "../components/Story";
@@ -11,7 +11,7 @@ export default function Home() {
       <HeroHeader />
       <About />
       <Story />
-      <Event />
+      <Events />
       <Gallery />
       <CTA />
     </main>

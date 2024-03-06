@@ -8,22 +8,18 @@ export const cardList = [
     {
         img: "/images/1.jpg",
         userName: "Suraj",
-        caption: "test file",
     },
     {
         img: "/images/2.jpg",
         userName: "Sonam",
-        caption: "First picture",
     },
     {
         img: "/images/3.jpg",
         userName: "Sonam",
-        caption: "Testing uplode picture",
     },
     {
         img: "/images/4.jpg",
         userName: "Ayush",
-        caption: "Us Together"
     }
 ]
 
@@ -32,11 +28,8 @@ export const FOOTER_LINKS = [
       title: 'Learn More',
       links: [
         'About You and Me',
-        'Press Releases',
-        'Environment',
-        'Jobs',
+        'Guide',
         'Privacy Policy',
-        'Contact Us',
       ],
     },
     {
@@ -56,11 +49,9 @@ export const FOOTER_LINKS = [
   export const SOCIALS = {
     title: 'Social',
     links: [
-      '/facebook.svg',
       '/instagram.svg',
       '/twitter.svg',
       '/youtube.svg',
-      '/wordpress.svg',
     ],
   };
 

@@ -9,6 +9,7 @@ body {
   background: #ffffff;
   width: 100%;
   min-height: 100vh;
+
 }
 
 @layer utilities {
@@ -18,8 +19,8 @@ body {
 .btn_white { 
   @apply  border-white bg-white px-8 py-3 text-green-50
 }
-.btn_white_text  { 
-  @apply  border-black bg-white px-8 py-3 text-gray-100
+.btn_3  { 
+  @apply  border-red-700  px-6 py-2 text-white bg-orange-400 hover:bg-yellow-50 hover:text-red-500
 }
 .btn_1  { 
   @apply  border-pink-700 bg-white px-6 py-2 text-red-700 hover:bg-gray-100
@@ -30,8 +31,18 @@ body {
 .btn_dark_green_outline  { 
   @apply border-gray-20 bg-green-90 px-8 py-5 text-white
 }
-
-
 } 
 
+.max-container {
+  @apply mx-auto max-w-[1440px];
+}
+
+form > div {
+  @apply flex flex-col gap-2;
+}
+
+input,
+textarea {
+  @apply shadow-md px-6 py-2 border border-slate-300;
+}
 
