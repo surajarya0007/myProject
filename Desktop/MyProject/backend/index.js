@@ -39,40 +39,38 @@ const auth = new google.auth.GoogleAuth({
   scopes: SCOPES,
 });
 
-app.post("/upload", upload.single("photo"), async (req, res) => {
+app.post("/upload", upload.any(), async (req, res) => {
   try {
-    const file = req.file;
-    console.log(file);
-    const { filename } = file;
+      console.log(req.body);
+      console.log(req.files);
+      const { body, files } = req;
 
-    const driveResponse = await google
-      .drive({ version: "v3", auth })
-      .files.create({
-        requestBody: {
-          name: filename,
-          parents: ["1CRKQSibMJccj1SLFHP-z3u58F1EnjiU3"],
-        },
-        media: {
-          mimeType: file.mimetype,
-          body: require("fs").createReadStream(file.path),
-        },
-      });
+      for (let f = 0; f < files.length; f += 1) {
+          await uploadFile(files[f]);
+      }
 
-    // Save metadata to MongoDB
-    const photo = {
-      filename,
-      driveFileId: driveResponse.data.id,
-    };
-
-    Admin.photos.push(photo);
-    await Admin.save();
-
-    res.status(200).send("Photos uploaded successfully");
-  } catch (error) {
-    console.error("Error uploading photos:", error);
-    res.status(500).send("Error uploading photos");
+      res.status(200).send("Form Submitted");
+  } catch (f) {
+      res.send(f.message);
   }
 });
+
+const uploadFile = async (fileObject) => {
+  const bufferStream = new stream.PassThrough();
+  bufferStream.end(fileObject.buffer);
+  const { data } = await google.drive({ version: "v3", auth }).files.create({
+      media: {
+          mimeType: fileObject.mimeType,
+          body: bufferStream,
+      },
+      requestBody: {
+          name: fileObject.originalname,
+          parents: ["1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al"],
+      },
+      fields: "id,name",
+  });
+  console.log(`Uploaded file ${data.name} ${data.id}`);
+};
 
 const fetchImagesFromDrive = async () => {
   const drive = google.drive({ version: "v3", auth });

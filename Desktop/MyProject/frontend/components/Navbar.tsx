@@ -62,8 +62,13 @@ function Navbar() {
           ))}
         </div>
         <div className="lg:flex  hidden space-x-3">
-          <Button type="button" title="Sign Up" variant="btn_1" />
-          <Button type="button" title="Login" variant="btn_2" />
+          <Link href="/login">
+            <Button
+            type='button'
+            title='Login'
+            variant='btn_2'
+            />
+          </Link>
         </div>
         <div className="lg:hidden pt-5" onClick={toggleMenu}>
           <Image src="menu.svg" alt="" width={20} height={20} />
