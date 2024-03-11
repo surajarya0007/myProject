@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 
-function Gallery() {
+function Uplode() {
   const [uploadMessage, setUploadMessage] = useState<string>('');
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -56,7 +56,7 @@ function Gallery() {
               <input
                 id='fileInput'
                 type='file'
-                name='Files'
+                name='file'
                 required
                 multiple
                 onChange={handleFileInputChange}
@@ -77,4 +77,4 @@ function Gallery() {
   );
 }
 
-export default Gallery;
+export default Uplode;
