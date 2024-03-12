@@ -1,12 +1,33 @@
 'use client'
-import React from 'react';
-import { cardList } from '../constants';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion'; // Import motion from framer-motion
+import { motion } from 'framer-motion';
 import AnimatedDiv from './AnimatedDiv';
 import LikeButton from './LikeButton';
 
 function Card() {
+  const [files, setFiles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Set the number of items per page
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('http://localhost:5050/fetchImages');
+      const data = await response.json();
+      setFiles(data.files);
+    };
+
+    fetchData();
+  }, []);
+
+  // Get current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = files.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
   const container = {
     hidden: { opacity: 1, scale: 0 },
     visible: {
@@ -15,7 +36,8 @@ function Card() {
       transition: {
         delayChildren: 0.3,
         staggerChildren: 0.2
-      }
+      },
+      beforeChildren: true
     }
   };
 
@@ -23,34 +45,44 @@ function Card() {
     hidden: { y: 200, opacity: 0 },
     visible: {
       y: 0,
-      opacity: 1
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
     }
   };
 
   return (
-    <AnimatedDiv>
-    <div className="container mx-auto">
-      {/* Wrap your grid with AnimatedDiv2 */}
-
+    <div>
+      <div className="container mx-auto">
         <motion.div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5" variants={container} initial="hidden" animate="visible">
-          {cardList.map((card, index) => (
-            // Wrap each card with motion.div and apply item variant
-            <motion.div key={index} className="shadow-lg rounded-3xl bg-white" variants={item}>
-              <img className="rounded-t-lg" src={card.img} alt="" />
+          {currentItems.map((file) => (
+            <AnimatedDiv>
+              <motion.div key={file.id} className="shadow-lg rounded-3xl bg-white" variants={item}>
+              <img className="rounded-t-lg" src={file.thumbnailLink} alt={file.name} />
               <div className="p-5">
-                <h3 className="text-xl font-bold text-slate-700 mb-4">{card.userName}'s</h3>
+                <h3 className="text-xl font-bold text-slate-700 mb-4">{file.name}</h3>
                 <div className="flex justify-between gap-2">
                   <LikeButton initialLikes={0} />
-                  <Image src="/downlode-icon.png" alt="Download" width={25} height={25} />
+                  <a href={`http://localhost:5050/download/${file.id}`} download>
+                    <Image src="/downlode-icon.png" alt="Download" width={25} height={25} />
+                  </a>
                 </div>
               </div>
             </motion.div>
+            </AnimatedDiv>
+            
           ))}
         </motion.div>
+        <div className='flex justify-center space-x-2 pt-7'>
+          <button className="bg-pink-700 px-6 py-1 text-white hover:bg-pink-900 gap-20 items-center justify-center rounded-full border" onClick={() => paginate(currentPage > 1 ? currentPage - 1 : currentPage)}>Prev</button>
+          <span className='text-xl items-center'>{currentPage}</span>
+          <button className="bg-pink-700 px-6 py-1 text-white hover:bg-pink-900 gap-3 items-center justify-center rounded-full border" onClick={() => paginate(currentPage < Math.ceil(files.length / itemsPerPage) ? currentPage + 1 : currentPage)}>Next</button>
+        </div>
+      </div>
     </div>
-    </AnimatedDiv>
-    
   );
 }
 
 export default Card;
+

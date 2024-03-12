@@ -1,11 +1,12 @@
 import React from 'react'
-import Uplode from '../../components/Uplode'
+import Upload from '../../components/Upload'
+import Upload2 from '../../components/Upload2'
 
 
 function page() {
   return (
     <div>
-        <Uplode/>
+        <Upload2/>
     </div>
   )
 }

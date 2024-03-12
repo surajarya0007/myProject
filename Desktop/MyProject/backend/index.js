@@ -6,16 +6,10 @@ const cors = require("cors");
 const path = require("path");
 const { google } = require("googleapis");
 const app = express();
-const upload = multer();
 const apiRoutes = require("./routes/api");
 const Admin = require("./models/Admin");
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// app.get("/", (req, res) => {
-//   res.sendFile(`${__dirname}/index.html`);
-// });
+const fs = require("fs");
+const exp = require("constants");
 
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/xyz";
 
@@ -31,72 +25,113 @@ mongoose
 app.use(cors());
 app.use("/api", apiRoutes);
 
-const KEYFILEPATH = path.join(__dirname, "cred.json");
-const SCOPES = ["https://www.googleapis.com/auth/drive"];
 
-const auth = new google.auth.GoogleAuth({
-  keyFile: KEYFILEPATH,
-  scopes: SCOPES,
-});
 
-app.post("/upload", upload.any(), async (req, res) => {
+app.get('/fetchImages', async (req, res) => {
   try {
-      console.log(req.body);
-      console.log(req.files);
-      const { body, files } = req;
-
-      for (let f = 0; f < files.length; f += 1) {
-          await uploadFile(files[f]);
-      }
-
-      res.status(200).send("Form Submitted");
-  } catch (f) {
-      res.send(f.message);
-  }
-});
-
-const uploadFile = async (fileObject) => {
-  const bufferStream = new stream.PassThrough();
-  bufferStream.end(fileObject.buffer);
-  const { data } = await google.drive({ version: "v3", auth }).files.create({
-      media: {
-          mimeType: fileObject.mimeType,
-          body: bufferStream,
-      },
-      requestBody: {
-          name: fileObject.originalname,
-          parents: ["1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al"],
-      },
-      fields: "id,name",
-  });
-  console.log(`Uploaded file ${data.name} ${data.id}`);
-};
-
-const fetchImagesFromDrive = async () => {
-  const drive = google.drive({ version: "v3", auth });
-
-  try {
-    const response = await drive.files.list({
-      q: "1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al", // Replace 'YOUR_FOLDER_ID' with the actual folder ID
-      fields: "files(id, name, webViewLink)",
+    const auth = new google.auth.GoogleAuth({
+      keyFile: "cred.json",
+      scopes: ["https://www.googleapis.com/auth/drive"],
     });
 
-    return response.data.files;
-  } catch (error) {
-    console.error("Error fetching images from Google Drive:", error);
-    return [];
-  }
-};
+    const drive = google.drive({
+      version: 'v3',
+      auth
+    });
 
-// Endpoint to fetch images
-app.get("/images", async (req, res) => {
-  try {
-    const images = await fetchImagesFromDrive();
-    res.json(images);
+    const response = await drive.files.list({
+      q: "'1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al' in parents and mimeType contains 'image'",
+      fields: 'files(id, name, webViewLink, thumbnailLink)',
+    });
+
+    res.json({ files: response.data.files });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch images" });
+    console.log(error);
   }
 });
+
+
+
+app.get('/download/:id', async (req, res) => {
+  try {
+    const auth = new google.auth.GoogleAuth({
+      keyFile: "cred.json",
+      scopes: ["https://www.googleapis.com/auth/drive"],
+    });
+
+    const drive = google.drive({
+      version: 'v3',
+      auth
+    });
+
+    const fileId = req.params.id;
+
+    drive.files.get(
+      { fileId, alt: 'media' },
+      { responseType: 'stream' }
+    ).then(response => {
+      res.setHeader('Content-Disposition', 'attachment; filename=file');
+      response.data
+        .on('end', () => {
+          console.log('Done downloading file.');
+        })
+        .on('error', err => {
+          console.error('Error downloading file.');
+          return res.status(500).send('Error downloading file');
+        })
+        .pipe(res);
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error downloading file');
+  }
+});
+
+
+
+
+const storage = multer.diskStorage({
+  destination:'uploads',
+  filename:function(req,file,callback){
+    const extention = file.originalname.split(".").pop()
+    callback(null,`${file.filename}-${Date.now()}.${extention}`)
+  }
+})
+
+const upload = multer({storage:storage})
+
+app.post('/upload',upload.array('files'),async(req,res) => {
+  try {
+    const auth = new google.auth.GoogleAuth({
+      keyFile:"cred.json",
+      scopes: ["https://www.googleapis.com/auth/drive"],
+    })
+    console.log(auth)
+    const drive = google.drive({
+      version: 'v3',
+      auth
+    });
+    const uplodedFiles =[]
+    for(let i=0;i<req.files.length;i++){
+      const file = req.files[i]
+      const response = await drive.files.create({
+        requestBody:{
+          name: file.originalname,
+          mineType: file.mineType,
+          parents:["1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al"]
+        },
+        media:{
+          body:fs.createReadStream(file.path)
+        }
+      })
+      uplodedFiles.push(response.data)
+    }
+    res.json({files:uplodedFiles})
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 
 app.listen(5050, () => {
   console.log("Form running on port 5050");
