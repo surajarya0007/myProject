@@ -20,6 +20,7 @@ function Card() {
     fetchData();
   }, []);
 
+  
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
