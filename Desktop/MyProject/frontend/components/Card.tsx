@@ -8,7 +8,7 @@ import LikeButton from './LikeButton';
 function Card() {
   const [files, setFiles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10); // Set the number of items per page
+  const [itemsPerPage] = useState(12); // Set the number of items per page
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +59,7 @@ function Card() {
           {currentItems.map((file) => (
             <AnimatedDiv>
               <motion.div key={file.id} className="shadow-lg rounded-3xl bg-white" variants={item}>
-              <img className="rounded-t-lg" src={file.thumbnailLink} alt={file.name} />
+              <img className="rounded-t-lg " src={file.thumbnailLink} alt={file.name}/>
               <div className="p-5">
                 <h3 className="text-xl font-bold text-slate-700 mb-4">{file.name}</h3>
                 <div className="flex justify-between gap-2">
