@@ -4,19 +4,32 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import AnimatedDiv from './AnimatedDiv';
 import LikeButton from './LikeButton';
+import { jwtDecode } from "jwt-decode";
 
 function Card() {
   const [files, setFiles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(12); // Set the number of items per page
+  const [itemsPerPage] = useState(12);
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5050/fetchImages');
-      const data = await response.json();
-      setFiles(data.files);
+        const decoded = jwtDecode(token);
+        console.log(decoded);
+        // const side = decoded.side;
+          const side = "groom";
+          const url = new URL('http://localhost:5050/fetchImages');
+          url.searchParams.append('side', side);
+          
+          const response = await fetch(url);
+    
+          if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+          }
+        const data = await response.json();
+        setFiles(data.files);
     };
-
     fetchData();
   }, []);
 
@@ -86,4 +99,5 @@ function Card() {
 }
 
 export default Card;
+
 

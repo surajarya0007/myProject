@@ -14,6 +14,12 @@ function Upload3() {
 
     const formData = new FormData();
     formData.append("files", file);
+    const token = localStorage.getItem("token");
+
+    const decoded = jwt_decode(token);
+    const side = decoded.side;
+    
+    formData.append("side", side);
 
     axios.post("http://localhost:5050/upload", formData)
     .then(response => {

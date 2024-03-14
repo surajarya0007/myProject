@@ -23,25 +23,38 @@ mongoose
   });
 
 app.use(cors());
+app.use(express.json());
 app.use("/api", apiRoutes);
 
-
-
-app.get('/fetchImages', async (req, res) => {
+app.get("/fetchImages", async (req, res) => {
   try {
+    const side = req.query.side;
+
+    console.log(side);
     const auth = new google.auth.GoogleAuth({
       keyFile: "cred.json",
       scopes: ["https://www.googleapis.com/auth/drive"],
     });
 
     const drive = google.drive({
-      version: 'v3',
-      auth
+      version: "v3",
+      auth,
     });
 
+    let folderId;
+    if (side === "bride") {
+      folderId =
+        "'1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al' in parents and mimeType contains 'image'";
+    } else if (side === "groom") {
+      folderId =
+        "'1pXeE1RyDjUs4gSL2L5Q6ogp36TAre_kE' in parents and mimeType contains 'image'";
+    } else {
+      return res.status(400).json({ error: "Invalid side value" });
+    }
+
     const response = await drive.files.list({
-      q: "'1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al' in parents and mimeType contains 'image'",
-      fields: 'files(id, name, webViewLink, thumbnailLink)',
+      q: folderId,
+      fields: "files(id, name, webViewLink, thumbnailLink)",
     });
 
     res.json({ files: response.data.files });
@@ -50,9 +63,7 @@ app.get('/fetchImages', async (req, res) => {
   }
 });
 
-
-
-app.get('/download/:id', async (req, res) => {
+app.get("/download/:id", async (req, res) => {
   try {
     const auth = new google.auth.GoogleAuth({
       keyFile: "cred.json",
@@ -60,78 +71,84 @@ app.get('/download/:id', async (req, res) => {
     });
 
     const drive = google.drive({
-      version: 'v3',
-      auth
+      version: "v3",
+      auth,
     });
 
     const fileId = req.params.id;
 
-    drive.files.get(
-      { fileId, alt: 'media' },
-      { responseType: 'stream' }
-    ).then(response => {
-      res.setHeader('Content-Disposition', 'attachment; filename=file');
-      response.data
-        .on('end', () => {
-          console.log('Done downloading file.');
-        })
-        .on('error', err => {
-          console.error('Error downloading file.');
-          return res.status(500).send('Error downloading file');
-        })
-        .pipe(res);
-    });
+    drive.files
+      .get({ fileId, alt: "media" }, { responseType: "stream" })
+      .then((response) => {
+        res.setHeader("Content-Disposition", "attachment; filename=file");
+        response.data
+          .on("end", () => {
+            console.log("Done downloading file.");
+          })
+          .on("error", (err) => {
+            console.error("Error downloading file.");
+            return res.status(500).send("Error downloading file");
+          })
+          .pipe(res);
+      });
   } catch (error) {
     console.log(error);
-    res.status(500).send('Error downloading file');
+    res.status(500).send("Error downloading file");
   }
 });
 
-
-
-
 const storage = multer.diskStorage({
-  destination:'uploads',
-  filename:function(req,file,callback){
-    const extention = file.originalname.split(".").pop()
-    callback(null,`${file.filename}-${Date.now()}.${extention}`)
-  }
-})
+  destination: "uploads",
+  filename: function (req, file, callback) {
+    const extention = file.originalname.split(".").pop();
+    callback(null, `${file.filename}-${Date.now()}.${extention}`);
+  },
+});
 
-const upload = multer({storage:storage})
+const upload = multer({ storage: storage });
 
-app.post('/upload',upload.array('files'),async(req,res) => {
+app.post("/upload", upload.array("files", "side"), async (req, res) => {
   try {
     const auth = new google.auth.GoogleAuth({
-      keyFile:"cred.json",
+      keyFile: "cred.json",
       scopes: ["https://www.googleapis.com/auth/drive"],
-    })
-    console.log(auth)
-    const drive = google.drive({
-      version: 'v3',
-      auth
     });
-    const uplodedFiles =[]
-    for(let i=0;i<req.files.length;i++){
-      const file = req.files[i]
+    console.log(auth);
+    const drive = google.drive({
+      version: "v3",
+      auth,
+    });
+
+    const side = req.side;
+
+    let folderId;
+    if (side === "bride") {
+      folderId = "1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al";
+    } else if (side === "groom") {
+      folderId = "1pXeE1RyDjUs4gSL2L5Q6ogp36TAre_kE";
+    } else {
+      return res.status(400).json({ error: "Invalid side value" });
+    }
+    const uplodedFiles = [];
+    for (let i = 0; i < req.files.length; i++) {
+      const file = req.files[i];
       const response = await drive.files.create({
-        requestBody:{
+        requestBody: {
           name: file.originalname,
           mineType: file.mineType,
-          parents:["1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al"]
+          parents: [folderId],
         },
-        media:{
-          body:fs.createReadStream(file.path)
-        }
-      })
-      uplodedFiles.push(response.data)
+        media: {
+          body: fs.createReadStream(file.path),
+        },
+      });
+      uplodedFiles.push(response.data);
     }
-    res.json({files:uplodedFiles})
+    res.json({ files: uplodedFiles });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-})
-
+});
 
 app.listen(5050, () => {
   console.log("Form running on port 5050");
