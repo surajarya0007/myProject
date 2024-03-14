@@ -44,7 +44,7 @@ function Upload3() {
               <Space direction="vertical" key={index} className="flex ">
                 <Space>
                   <Typography>{file.name}</Typography>
-                  {file.progress === 100 ? <Typography.Text type="secondary"> is Uploaded Successfully </Typography.Text> : null}
+                  {file.progress === 100 ? <Typography.Text type="secondary">file is Uploaded Successfully </Typography.Text> : null}
                 </Space>  
                 <Progress percent={Math.ceil(file.progress)} />
               </Space>
@@ -55,5 +55,4 @@ function Upload3() {
     </>
   );
 }
-
 export default Upload3;
