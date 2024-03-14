@@ -8,8 +8,8 @@ const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    username: "",
-    side: ""
+    side: "",
+    username: ""
   });
 
   const handleToggleForm = () => {
@@ -28,11 +28,14 @@ const LoginPage: React.FC = () => {
     try {
       if (isLogin) {
         const response = await axios.post("http://localhost:5050/api/login", formData);
+
+        const { token } = response.data;
         // Handle successful login
+        localStorage.setItem("token", token);
         console.log(response.data);
       } else {
         const response = await axios.post("http://localhost:5050/api/admin/signup", formData);
-        // Handle successful signup
+        window.location.href = "/gallery";
         console.log(response.data);
       }
     } catch (error) {

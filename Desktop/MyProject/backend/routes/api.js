@@ -55,7 +55,7 @@ router.post("/admin/signup", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, side } = req.body;
 
     let user;
 
@@ -70,11 +70,9 @@ router.post("/login", async (req, res) => {
       return res.status(402).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign(
-      { email: user.email }, // Include user ID and role in the token payload
-      SECRET_KEY, // Replace with your actual secret key
-      { expiresIn: "24h" } // Token expiration time
-    );
+    const token = jwt.sign({ email: user.email, side }, SECRET_KEY, {
+      expiresIn: "24h",
+    });
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
