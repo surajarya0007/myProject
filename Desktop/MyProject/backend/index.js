@@ -44,7 +44,7 @@ app.get("/fetchImages", async (req, res) => {
     let folderId;
     if (side === "bride") {
       folderId =
-        "'1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al' in parents and mimeType contains 'image'";
+        "'1T44BI4QJaTRIhBHEWPEHVZKnpl-P7Qhd' in parents and mimeType contains 'image'";
     } else if (side === "groom") {
       folderId =
         "'1pXeE1RyDjUs4gSL2L5Q6ogp36TAre_kE' in parents and mimeType contains 'image'";
@@ -109,6 +109,7 @@ const upload = multer({ storage: storage });
 
 app.post("/upload", upload.array("files", "side"), async (req, res) => {
   try {
+    
     const auth = new google.auth.GoogleAuth({
       keyFile: "cred.json",
       scopes: ["https://www.googleapis.com/auth/drive"],
@@ -119,11 +120,11 @@ app.post("/upload", upload.array("files", "side"), async (req, res) => {
       auth,
     });
 
-    const side = req.side;
+    const side = req.query.side;
 
     let folderId;
     if (side === "bride") {
-      folderId = "1t4M7MiTkAz8QPsQgwXtywY-j58MaL9al";
+      folderId = "1T44BI4QJaTRIhBHEWPEHVZKnpl-P7Qhd";
     } else if (side === "groom") {
       folderId = "1pXeE1RyDjUs4gSL2L5Q6ogp36TAre_kE";
     } else {

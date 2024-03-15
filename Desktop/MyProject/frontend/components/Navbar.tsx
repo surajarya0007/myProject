@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence from framer-motion
@@ -7,8 +7,20 @@ import { NAV_LINKS } from "../constants";
 import Button from "./Button";
 
 function Navbar() {
+  const token = localStorage.getItem("token");
+
   const [showMenu, setShowMenu] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [loginValue, setLoginValue] = useState("Login");
+  
+
+  const handleLoginValue = () => {
+    if(token){
+      setLoginValue("Logout");
+    }else{
+      setLoginValue("Login");
+    }
+  };
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -62,11 +74,12 @@ function Navbar() {
           ))}
         </div>
         <div className="lg:flex  hidden space-x-3">
-          <Link href="/login">
+          <Link href="/login" onClick={handleLoginValue}>
             <Button
             type='button'
-            title='Login'
+            title={loginValue}
             variant='btn_2'
+            icon=""
             />
           </Link>
         </div>

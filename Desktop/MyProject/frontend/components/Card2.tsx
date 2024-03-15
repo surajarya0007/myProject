@@ -29,7 +29,7 @@ function Card() {
     <div className="container mx-auto relative">
       <div className="flex gap-6 overflow-x-auto" ref={cardContainerRef}>
         {cardList.map((card, index) => (
-          <div key={index} className="shadow-lg rounded-3xl bg-white w-64 sm:w-auto">
+          <div key={index} className="shadow-lg rounded-3xl bg-white w-64">
             <img className="rounded-t-lg w-full" src={card.img} alt="" />
             <div className="p-5">
               <h3 className="text-xl font-bold text-slate-700 mb-3">{card.userName}'s</h3>

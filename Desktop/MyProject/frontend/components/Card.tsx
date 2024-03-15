@@ -72,14 +72,16 @@ function Card() {
         <motion.div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5" variants={container} initial="hidden" animate="visible">
           {currentItems.map((file) => (
             <AnimatedDiv>
-              <motion.div key={file.id} className="shadow-lg rounded-3xl bg-white" variants={item}>
-              <img className="rounded-t-lg " src={file.thumbnailLink} alt={file.name}/>
+              <motion.div key={file.id} className="shadow-lg h-full rounded-3xl flex flex-col justify-end bg-white" variants={item}>
+              <div className=' flex justify-center h-full'>
+                <img className="rounded-t-3xl w-full" src={file.thumbnailLink} alt={file.name} />
+              </div>
+              
               <div className="p-5">
-                <h3 className="text-xl font-bold text-slate-700 mb-4">{file.name}</h3>
                 <div className="flex justify-between gap-2">
-                  <LikeButton initialLikes={0} />
+                  <LikeButton  initialLikes={0} />
                   <a href={`http://localhost:5050/download/${file.id}`} download>
-                    <Image src="/downlode-icon.png" alt="Download" width={25} height={25} />
+                    <Image src="/downlode-icon.png" alt="Download" width={22} height={22} />
                   </a>
                 </div>
               </div>
@@ -101,3 +103,126 @@ function Card() {
 export default Card;
 
 
+
+
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import Image from 'next/image';
+// import { motion } from 'framer-motion';
+// import AnimatedDiv from './AnimatedDiv';
+// import LikeButton from './LikeButton';
+// import { jwtDecode } from "jwt-decode";
+// import { Modal } from 'antd'; // Import the Modal component from Ant Design
+
+// function Card() {
+//   const [files, setFiles] = useState([]);
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [itemsPerPage] = useState(12);
+//   const [visible, setVisible] = useState(false); // State to control the visibility of the modal
+//   const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
+
+//   const token = localStorage.getItem("token");
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//         const decoded = jwtDecode(token);
+//         console.log(decoded);
+//         // const side = decoded.side;
+//           const side = "groom";
+//           const url = new URL('http://localhost:5050/fetchImages');
+//           url.searchParams.append('side', side);
+          
+//           const response = await fetch(url);
+    
+//           if (!response.ok) {
+//             throw new Error(`API request failed with status ${response.status}`);
+//           }
+//         const data = await response.json();
+//         setFiles(data.files);
+//     };
+//     fetchData();
+//   }, []);
+
+  
+//   // Get current items
+//   const indexOfLastItem = currentPage * itemsPerPage;
+//   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+//   const currentItems = files.slice(indexOfFirstItem, indexOfLastItem);
+
+//   // Change page
+//   const paginate = pageNumber => setCurrentPage(pageNumber);
+
+//   const container = {
+//     hidden: { opacity: 1, scale: 0 },
+//     visible: {
+//       opacity: 1,
+//       scale: 1,
+//       transition: {
+//         delayChildren: 0.3,
+//         staggerChildren: 0.2
+//       },
+//       beforeChildren: true
+//     }
+//   };
+
+//   const item = {
+//     hidden: { y: 200, opacity: 0 },
+//     visible: {
+//       y: 0,
+//       opacity: 1,
+//       transition: {
+//         duration: 0.5
+//       }
+//     }
+//   };
+
+//   const showModal = (image) => {
+//     setSelectedImage(image);
+//     setVisible(true);
+//   }
+
+//   const handleCancel = () => {
+//     setVisible(false);
+//   }
+
+//   return (
+//     <div>
+//       <div className="container mx-auto">
+//         <motion.div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5" variants={container} initial="hidden" animate="visible">
+//           {currentItems.map((file) => (
+//             <AnimatedDiv>
+//               <motion.div key={file.id} className="shadow-lg h-full rounded-3xl flex flex-col justify-end bg-white" variants={item}>
+//               <div className=' flex justify-center h-full'>
+//                 <img className="rounded-t-3xl w-full" src={file.thumbnailLink} alt={file.name} onClick={() => showModal(file.webViewLink)} />
+//               </div>
+              
+//               <div className="p-5">
+//                 <div className="flex justify-between gap-2">
+//                   <LikeButton  initialLikes={0} />
+//                   <a href={`http://localhost:5050/download/${file.id}`} download>
+//                     <Image src="/downlode-icon.png" alt="Download" width={22} height={22} />
+//                   </a>
+//                 </div>
+//               </div>
+//             </motion.div>
+//             </AnimatedDiv>
+            
+//           ))}
+//         </motion.div>
+//         <div className='flex justify-center space-x-2 pt-7'>
+//           <button className="bg-pink-700 px-6 py-1 text-white hover:bg-pink-900 gap-20 items-center justify-center rounded-full border" onClick={() => paginate(currentPage > 1 ? currentPage - 1 : currentPage)}>Prev</button>
+//           <span className='text-xl items-center'>{currentPage}</span>
+//           <button className="bg-pink-700 px-6 py-1 text-white hover:bg-pink-900 gap-3 items-center justify-center rounded-full border" onClick={() => paginate(currentPage < Math.ceil(files.length / itemsPerPage) ? currentPage + 1 : currentPage)}>Next</button>
+//         </div>
+//       </div>
+//       <Modal visible={visible} onCancel={handleCancel} footer={null} centered width={800}>
+//         <img src={selectedImage} alt={selectedImage} style={{ width: '100%', height: 'auto' }} />
+        
+//       </Modal>
+//     </div>
+//   );
+// }
+
+// export default Card;
