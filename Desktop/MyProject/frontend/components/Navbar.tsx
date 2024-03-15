@@ -7,19 +7,19 @@ import { NAV_LINKS } from "../constants";
 import Button from "./Button";
 
 function Navbar() {
-  const token = localStorage.getItem("token");
-
   const [showMenu, setShowMenu] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [loginValue, setLoginValue] = useState("Login");
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLoginValue = () => {
-    if(token){
-      setLoginValue("Logout");
-    }else{
-      setLoginValue("Login");
-    }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token); // Check if token exists in local storage
+  }, []);
+
+  const handleLogout = () => {
+    console.log("hi");
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
   };
 
   const toggleMenu = () => {
@@ -73,15 +73,19 @@ function Navbar() {
             </Link>
           ))}
         </div>
-        <div className="lg:flex  hidden space-x-3">
-          <Link href="/login" onClick={handleLoginValue}>
-            <Button
-            type='button'
-            title={loginValue}
-            variant='btn_2'
-            icon=""
-            />
-          </Link>
+        <div className="lg:flex hidden space-x-3">
+          {isLoggedIn ? (
+            <button className="bg-pink-700 px-6 py-1 text-white hover:bg-pink-900 gap-20 items-center justify-center rounded-full border" onClick={() => (handleLogout())}>LogOut</button>
+          ) : (
+            <Link href="/login">
+              <Button
+                type="button"
+                title="Login"
+                variant="btn_2"
+                icon=""
+              />
+            </Link>
+          )}
         </div>
         <div className="lg:hidden pt-5" onClick={toggleMenu}>
           <Image src="menu.svg" alt="" width={20} height={20} />

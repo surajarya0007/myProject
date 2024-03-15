@@ -17,8 +17,7 @@ function Card() {
     const fetchData = async () => {
         const decoded = jwtDecode(token);
         console.log(decoded);
-        // const side = decoded.side;
-          const side = "groom";
+        const side = decoded.side;
           const url = new URL('http://localhost:5050/fetchImages');
           url.searchParams.append('side', side);
           

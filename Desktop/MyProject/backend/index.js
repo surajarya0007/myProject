@@ -77,10 +77,22 @@ app.get("/download/:id", async (req, res) => {
 
     const fileId = req.params.id;
 
+    // Fetch file metadata to get MIME type
+    const fileMetadata = await drive.files.get({
+      fileId,
+      fields: "mimeType",
+    });
+
+    // Extract MIME type from metadata
+    const mimeType = fileMetadata.data.mimeType;
+
+    console.log(mimeType);
+
     drive.files
       .get({ fileId, alt: "media" }, { responseType: "stream" })
       .then((response) => {
         res.setHeader("Content-Disposition", "attachment; filename=file");
+        res.setHeader("Content-Type", mimeType);
         response.data
           .on("end", () => {
             console.log("Done downloading file.");
@@ -107,20 +119,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/upload", upload.array("files", "side"), async (req, res) => {
+app.post("/upload", upload.array("files"), async (req, res) => {
   try {
-    
     const auth = new google.auth.GoogleAuth({
       keyFile: "cred.json",
       scopes: ["https://www.googleapis.com/auth/drive"],
     });
-    console.log(auth);
     const drive = google.drive({
       version: "v3",
       auth,
     });
 
-    const side = req.query.side;
+    const side = req.headers.side;
 
     let folderId;
     if (side === "bride") {

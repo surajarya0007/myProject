@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import {Button , Progress, Space, Typography, Upload} from "antd";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 function Upload3() {
   const [files, setFiles] = useState({})
 
   const handleFileUpload = ({file}) => {
-    console.log(file)
     setFiles(pre => {
       return{...pre,[file.uid]:file}
     })
@@ -16,12 +16,19 @@ function Upload3() {
     formData.append("files", file);
     const token = localStorage.getItem("token");
 
-    const decoded = jwt_decode(token);
+    console.log(formData);
+    const decoded = jwtDecode(token);
     const side = decoded.side;
-    
-    formData.append("side", side);
 
-    axios.post("http://localhost:5050/upload", formData)
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Side: side // Include the 'side' parameter in the headers
+      }
+    };
+
+    axios.post("http://localhost:5050/upload", formData, config)
     .then(response => {
       console.log("uploded files: ", response.data.files);
       setFiles(pre => {

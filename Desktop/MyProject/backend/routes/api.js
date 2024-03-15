@@ -44,6 +44,8 @@ router.post("/admin/signup", async (req, res) => {
       password: hashedPassword,
       side,
     });
+
+    console.log(newAdmin);
     await newAdmin.save();
 
     res.status(201).json({ message: "Admin registered successfully" });
@@ -70,7 +72,7 @@ router.post("/login", async (req, res) => {
       return res.status(402).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ email: user.email, side }, SECRET_KEY, {
+    const token = jwt.sign({ email: user.email, side: user.side }, SECRET_KEY, {
       expiresIn: "24h",
     });
 

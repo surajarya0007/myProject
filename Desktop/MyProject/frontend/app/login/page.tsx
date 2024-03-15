@@ -107,6 +107,7 @@ const LoginPage: React.FC = () => {
               onChange={handleChange}
               className="border border-gray-300 rounded-md px-3 py-2"
             >
+              <option value=""></option>
               <option value="groom">Groom</option>
               <option value="bride">Bride</option>
             </select>
