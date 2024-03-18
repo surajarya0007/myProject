@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect } from 'react'
-import Card from '../../components/Card'
 import Link from 'next/link'
 import Button from '../../components/Button'
+import Card3 from '../../components/Card3'
 
 function gallery() {
 
@@ -24,9 +24,8 @@ function gallery() {
           />
       </Link>
       <div className='py-10'>
-        <Card />
+        <Card3 />
       </div>
-      {/* gsegopspo */}
     </div>
   )
 }

@@ -1,9 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import axios from 'axios';
 
+
+
 const LoginPage: React.FC = () => {
+  
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (token) {
+      window.location.href = "/gallery";
+    }
+}, [token]);
+
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: "",
@@ -11,6 +21,8 @@ const LoginPage: React.FC = () => {
     side: "",
     username: ""
   });
+
+ 
 
   const handleToggleForm = () => {
     setIsLogin(!isLogin);
@@ -28,14 +40,14 @@ const LoginPage: React.FC = () => {
     try {
       if (isLogin) {
         const response = await axios.post("http://localhost:5050/api/login", formData);
-
         const { token } = response.data;
         // Handle successful login
         localStorage.setItem("token", token);
         console.log(response.data);
+        window.location.reload();
       } else {
         const response = await axios.post("http://localhost:5050/api/admin/signup", formData);
-        window.location.href = "/gallery";
+        window.location.reload();
         console.log(response.data);
       }
     } catch (error) {
@@ -107,7 +119,7 @@ const LoginPage: React.FC = () => {
               onChange={handleChange}
               className="border border-gray-300 rounded-md px-3 py-2"
             >
-              <option value=""></option>
+              <option value="" disabled>--Please choose an option--</option>
               <option value="groom">Groom</option>
               <option value="bride">Bride</option>
             </select>

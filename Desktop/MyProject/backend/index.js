@@ -43,18 +43,16 @@ app.get("/fetchImages", async (req, res) => {
 
     let folderId;
     if (side === "bride") {
-      folderId =
-        "'1T44BI4QJaTRIhBHEWPEHVZKnpl-P7Qhd' in parents and mimeType contains 'image'";
+      folderId = "'1T44BI4QJaTRIhBHEWPEHVZKnpl-P7Qhd' in parents";
     } else if (side === "groom") {
-      folderId =
-        "'1pXeE1RyDjUs4gSL2L5Q6ogp36TAre_kE' in parents and mimeType contains 'image'";
+      folderId = "'1pXeE1RyDjUs4gSL2L5Q6ogp36TAre_kE' in parents";
     } else {
       return res.status(400).json({ error: "Invalid side value" });
     }
 
     const response = await drive.files.list({
       q: folderId,
-      fields: "files(id, name, webViewLink, thumbnailLink)",
+      fields: "files(id, name, webViewLink, thumbnailLink, mimeType)",
     });
 
     res.json({ files: response.data.files });
@@ -62,6 +60,7 @@ app.get("/fetchImages", async (req, res) => {
     console.log(error);
   }
 });
+
 
 app.get("/download/:id", async (req, res) => {
   try {
@@ -77,21 +76,22 @@ app.get("/download/:id", async (req, res) => {
 
     const fileId = req.params.id;
 
-    // Fetch file metadata to get MIME type
+    // Fetch file metadata to get MIME type and original filename
     const fileMetadata = await drive.files.get({
       fileId,
-      fields: "mimeType",
+      fields: "mimeType, name",
     });
 
-    // Extract MIME type from metadata
+    // Extract MIME type and original filename from metadata
     const mimeType = fileMetadata.data.mimeType;
+    const filename = fileMetadata.data.name;
 
     console.log(mimeType);
 
     drive.files
       .get({ fileId, alt: "media" }, { responseType: "stream" })
       .then((response) => {
-        res.setHeader("Content-Disposition", "attachment; filename=file");
+        res.setHeader("Content-Disposition", `attachment; filename=${filename}`);
         res.setHeader("Content-Type", mimeType);
         response.data
           .on("end", () => {
@@ -108,6 +108,8 @@ app.get("/download/:id", async (req, res) => {
     res.status(500).send("Error downloading file");
   }
 });
+
+
 
 const storage = multer.diskStorage({
   destination: "uploads",

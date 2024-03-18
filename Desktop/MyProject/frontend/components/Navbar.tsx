@@ -8,7 +8,7 @@ import Button from "./Button";
 
 function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -17,9 +17,9 @@ function Navbar() {
   }, []);
 
   const handleLogout = () => {
-    console.log("hi");
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    window.location.reload();
   };
 
   const toggleMenu = () => {
@@ -62,10 +62,10 @@ function Navbar() {
         <div className="lg:flex hidden space-x-10 text-xl font-serif">
           {NAV_LINKS.map((link, index) => (
             <Link
-              className={selectedIndex === index ? 'text-2xl ' : ''}
-              href={link.href} 
+              className={selectedIndex === index ? "text-2xl " : ""}
+              href={link.href}
               key={link.key}
-              onClick={()=> {
+              onClick={() => {
                 setSelectedIndex(index);
               }}
             >
@@ -75,15 +75,15 @@ function Navbar() {
         </div>
         <div className="lg:flex hidden space-x-3">
           {isLoggedIn ? (
-            <button className="bg-pink-700 px-6 py-1 text-white hover:bg-pink-900 gap-20 items-center justify-center rounded-full border" onClick={() => (handleLogout())}>LogOut</button>
+            <button
+              className="bg-pink-700 px-6 py-2 text-white hover:bg-pink-900 gap-20 items-center justify-center rounded-full border"
+              onClick={() => handleLogout()}
+            >
+              LogOut
+            </button>
           ) : (
             <Link href="/login">
-              <Button
-                type="button"
-                title="Login"
-                variant="btn_2"
-                icon=""
-              />
+              <Button type="button" title="Login" variant="btn_2" icon="" />
             </Link>
           )}
         </div>
@@ -102,7 +102,7 @@ function Navbar() {
             animate="visible"
             exit="hidden" // Animation when menu is hidden
           >
-            <ul className="flex flex-col items-center py-5 justify-center space-y-24 text-2xl font-serif h-screen">
+            <ul className="flex flex-col items-center py-5 justify-center space-y-20 text-2xl font-serif h-screen">
               {NAV_LINKS.map((link, index) => (
                 <motion.li
                   className={selectedIndex === index ? "text-4xl" : ""}
@@ -117,6 +117,28 @@ function Navbar() {
                   </Link>
                 </motion.li>
               ))}
+              <motion.li className=" lg:hidden">
+                {isLoggedIn ? (
+                  <button
+                    className="bg-pink-700 px-6 py-2 text-white hover:bg-pink-900 gap-20 items-center justify-center rounded-full border"
+                    onClick={() => {
+                      handleLogout();
+                      toggleMenu;
+                    }}
+                  >
+                    LogOut
+                  </button>
+                ) : (
+                  <Link href="/login" onClick={toggleMenu}>
+                    <Button
+                      type="button"
+                      title="Login"
+                      variant="btn_2"
+                      icon=""
+                    />
+                  </Link>
+                )}
+              </motion.li>
             </ul>
           </motion.div>
         )}
