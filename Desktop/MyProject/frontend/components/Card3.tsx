@@ -93,7 +93,7 @@ function Card3() {
                 }
               >
                 <div className="flex justify-between mt-auto">
-                  <LikeButton initialLikes={0} />
+                <LikeButton photoId={file.id} />
                   <a
                     href={`http://localhost:5050/download/${file.id}`}
                     download

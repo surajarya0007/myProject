@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const Admin = require("../models/Admin");
+const Photo = require("../models/Photo");
 const SECRET_KEY = "XYZ";
 
 const verifyToken = (req, res, next) => {
@@ -86,16 +87,50 @@ router.post("/login", async (req, res) => {
 router.post("/like/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const photo = await admin.photo.findIndex((id) => photo.id === id);
+    const { userId } = req.body;
+
+    let photo = await Photo.findOne({ driveFileId: id });
+
     if (!photo) {
-      return res.status(404).send("Photo not found");
+      photo = new Photo({
+        driveFileId: id,
+        user: [userId],
+      });
+    } else {
+      const index = photo.user.indexOf(userId);
+      if (index !== -1) {
+        photo.user.splice(index, 1);
+      } else {
+        photo.user.push(userId);
+      }
     }
-    photo.likes++;
     await photo.save();
+
     res.status(200).send("Liked photo successfully");
   } catch (error) {
     console.error("Error liking photo:", error);
     res.status(500).send("Error liking photo");
+  }
+});
+
+router.get("/totalLikes/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const photo = await Photo.findOne({ driveFileId: id });
+
+    if (!photo) {
+      return res.status(200).json({ userExists: false, userSize: 0 });
+    }
+
+    const { userId } = req.query;
+    const userExists = photo.user.includes(userId);
+    const userSize = photo.user.length;
+
+    res.status(200).json({ userExists, userSize });
+  } catch (error) {
+    console.error("Error finding photo:", error);
+    res.status(500).send("Error finding photo");
   }
 });
 

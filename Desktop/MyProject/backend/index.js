@@ -30,7 +30,6 @@ app.get("/fetchImages", async (req, res) => {
   try {
     const side = req.query.side;
 
-    console.log(side);
     const auth = new google.auth.GoogleAuth({
       keyFile: "cred.json",
       scopes: ["https://www.googleapis.com/auth/drive"],
@@ -61,7 +60,6 @@ app.get("/fetchImages", async (req, res) => {
   }
 });
 
-
 app.get("/download/:id", async (req, res) => {
   try {
     const auth = new google.auth.GoogleAuth({
@@ -91,7 +89,10 @@ app.get("/download/:id", async (req, res) => {
     drive.files
       .get({ fileId, alt: "media" }, { responseType: "stream" })
       .then((response) => {
-        res.setHeader("Content-Disposition", `attachment; filename=${filename}`);
+        res.setHeader(
+          "Content-Disposition",
+          `attachment; filename=${filename}`
+        );
         res.setHeader("Content-Type", mimeType);
         response.data
           .on("end", () => {
@@ -108,8 +109,6 @@ app.get("/download/:id", async (req, res) => {
     res.status(500).send("Error downloading file");
   }
 });
-
-
 
 const storage = multer.diskStorage({
   destination: "uploads",
