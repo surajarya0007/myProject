@@ -18,12 +18,10 @@ function About() {
           <div className="w-1/2 flex flex-col justify-center ">
             <h4 className="text-2xl pb-9 font-serif">THE BRIDE</h4>
             <p className="pb-4">
-              I think the moment I knew he was “the one” was when I had a work
-              assignment that would take me to France for 10 weeks.
+              I think the moment I knew he was “the one” was when I meet him in person.
             </p>
             <p>
-              It was only once I was on the plane I realized how much I would
-              miss him. I never wanted to be without him again!
+             Our destined love story blossomed despite distance, founded on mutual respect and care. Now, eagerly waiting to anticipate a joyous family future together.❣️
             </p>
           </div>
           <div className="">
@@ -40,14 +38,9 @@ function About() {
           <div className="text-center w-1/2 flex flex-col justify-center ">
             <h4 className="text-2xl pb-9 font-serif">THE GROOM</h4>
             <p className="pb-4">
-              What can I say, she is amazing. Brilliant, creative, and
-              adventurous. I have always been a little bit shy, and she has
-              shown me a whole new side of life.
+            What can I say, she is pretty much the same in nature just like me, at first meeting, everything was so awkward but I still liked her.
             </p>
-            <p>
-              I never want to go back to the way life was before I met her. She
-              is my forever.
-            </p>
+            <p>She is going to be a great wife because she does everything with her whole heart.</p>
           </div>
         </div>
       </AnimatedDiv>
