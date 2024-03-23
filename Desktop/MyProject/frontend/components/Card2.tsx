@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef } from 'react';
 import { cardList } from '../constants';
+import Image from 'next/image';
 
 function Card2() {
   const cardContainerRef = useRef<HTMLDivElement>(null);
@@ -23,12 +24,20 @@ function Card2() {
     }
   };
 
+
+ 
   return (
     <div className="container mx-auto relative">
-      <div className="flex gap-2 overflow-x-auto " ref={cardContainerRef}>
+      <div className="flex gap-2 sm:gap-4 overflow-x-auto " ref={cardContainerRef}>
         {cardList.map((card, index) => (
-          <div key={index} className="shadow-lg rounded-3xl bg-white w-full h-48 sm:h-full">
-            <img className="rounded-2xl w-full h-full" src={card.img} alt="" />
+          <div key={index} className="shadow-lg rounded-3xl bg-white w-full h-full">
+            <Image 
+              className="rounded-2xl h-full w-full"
+              src={card.img}
+              alt=''
+              height={200}
+              width={200}
+            />
           </div>
         ))}
       </div>

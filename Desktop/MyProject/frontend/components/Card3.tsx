@@ -43,7 +43,7 @@ function Card3() {
       setFiles(data.files);
     };
     fetchData();
-  }, []);
+  }, [token]);
 
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -95,11 +95,18 @@ function Card3() {
                 cover={
                   <div className="flex items-center justify-center rounded-t-3xl">
                     <a href={file.webViewLink}>
-                      <img
+                      <Image 
+                        className="object-cover mx-auto h-full w-full rounded-t-2xl"
+                        alt={file.name}
+                        src={file.thumbnailLink}
+                        width={300}
+                        height={300}
+                      />
+                      {/* <img
                         className="object-cover mx-auto mt-4 "
                         alt={file.name}
                         src={file.thumbnailLink}
-                      />
+                      /> */}
                     </a>
                   </div>
                 }
