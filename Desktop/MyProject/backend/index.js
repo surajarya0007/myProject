@@ -5,13 +5,17 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const { google } = require("googleapis");
-const app = express();
 const apiRoutes = require("./routes/api");
 const Admin = require("./models/Admin");
 const fs = require("fs");
 const exp = require("constants");
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/xyz";
+require("dotenv").config();
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+const MONGO_URI =
+  process.env.MONGO_URI || "mongodb://localhost:27017/signupapp";
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -162,6 +166,6 @@ app.post("/upload", upload.array("files"), async (req, res) => {
   }
 });
 
-app.listen(5050, () => {
-  console.log("Form running on port 5050");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
