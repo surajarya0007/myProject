@@ -1,11 +1,9 @@
 "use client";
 import React, { useRef } from 'react';
 import { cardList } from '../constants';
-import Button from './Button';
-import Image from 'next/image';
 
-function Card() {
-  const cardContainerRef = useRef(null);
+function Card2() {
+  const cardContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
     if (cardContainerRef.current) {
@@ -50,4 +48,4 @@ function Card() {
   );
 }
 
-export default Card;
+export default Card2;

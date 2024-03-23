@@ -1,43 +1,55 @@
 'use client'
 import React, { useState } from "react";
-import {Button , Progress, Space, Typography, Upload} from "antd";
+import { Button, Progress, Space, Typography, Upload } from "antd";
+import { RcFile, UploadRequestOption } from 'antd/lib/upload/interface'; 
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-function Upload3() {
-  const [files, setFiles] = useState({})
+interface ExtendedRcFile extends RcFile {
+  progress?: number;
+}
 
-  const handleFileUpload = ({file}) => {
-    setFiles(pre => {
-      return{...pre,[file.uid]:file}
-    })
+interface JwtPayload {
+  side: string; 
+}
+
+function Upload3() {
+  const [files, setFiles] = useState<Record<string, ExtendedRcFile>>({});
+
+  // Correct the function to match expected signature
+  const handleFileUpload = (options: UploadRequestOption<any>) => {
+    const { file } = options;
+    const extendedFile: ExtendedRcFile = file as ExtendedRcFile; // Cast to your ExtendedRcFile
+
+    setFiles(prev => ({
+      ...prev,
+      [extendedFile.uid]: extendedFile,
+    }));
 
     const formData = new FormData();
-    formData.append("files", file);
-    const token = localStorage.getItem("token");
+    formData.append("files", extendedFile);
+    const token = localStorage.getItem("token") || "";
 
-    console.log(formData);
-    const decoded = jwtDecode(token);
+    const decoded = jwtDecode<JwtPayload>(token);
     const side = decoded.side;
-
 
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
-        Side: side // Include the 'side' parameter in the headers
-      }
+        Side: side,
+      },
     };
 
     axios.post("http://localhost:5050/upload", formData, config)
-    .then(response => {
-      console.log("uploded files: ", response.data.files);
-      setFiles(pre => {
-        return {...pre, [file.uid]: {...file, progress: 100}}
+      .then(response => {
+        setFiles(prev => ({
+          ...prev,
+          [extendedFile.uid]: { ...extendedFile, progress: 100 },
+        }));
       })
-    })
-    .catch(error => {
-      console.log("error", error);
-    });
+      .catch(error => {
+        console.log("error", error);
+      });
   };
 
   return (
@@ -52,17 +64,18 @@ function Upload3() {
           <Upload.Dragger multiple customRequest={handleFileUpload} showUploadList={false}>
             Drag files here OR <Button>Click to Upload</Button>
           </Upload.Dragger>
-          {Object.values(files).map((file,index)=>{
-            return (
-              <Space direction="vertical" key={index} className="flex ">
-                <Space>
-                  <Typography>{file.name}</Typography>
-                  {file.progress === 100 ? <Typography.Text type="secondary">file is Uploaded Successfully </Typography.Text> : null}
-                </Space>  
-                <Progress percent={Math.ceil(file.progress)} />
-              </Space>
-            )
-          })}
+          {Object.values(files).map((file, index) => {
+        return (
+          <Space direction="vertical" key={index} className="flex ">
+            <Space>
+              <Typography>{file.name}</Typography>
+              {file.progress === 100 ? <Typography.Text type="secondary">file is Uploaded Successfully </Typography.Text> : null}
+            </Space>  
+            {/* Use a default value for progress */}
+            <Progress percent={Math.ceil(file.progress || 0)} />
+          </Space>
+        )
+      })}
         </Space>
       </div>
     </>

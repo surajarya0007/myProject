@@ -52,7 +52,7 @@ const LoginPage: React.FC = () => {
       }
     } catch (error) {
       // Handle error
-      console.error("API Error:", error.response.data);
+      console.error("API Error:");
     }
   };
 

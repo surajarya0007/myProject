@@ -1,10 +1,10 @@
 'use client'
 // components/AnimatedDiv.js
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
-const AnimatedDiv = ({ children }) => {
+const AnimatedDiv = ({ children }: { children: ReactNode }) => {
   const controls = useAnimation();
   const { ref, inView } = useInView();
 

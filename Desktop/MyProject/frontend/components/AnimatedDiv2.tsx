@@ -1,8 +1,8 @@
 'use client'// components/AnimatedDiv.js''
-import React from "react";
+import React, { ReactNode } from "react";
 import { motion } from "framer-motion";
 
-const AnimatedDiv2 = ({ children }) => {
+const AnimatedDiv2 = ({ children }: { children: ReactNode }) => {
   
   const container = {
     hidden: { opacity: 1, scale: 0 },
