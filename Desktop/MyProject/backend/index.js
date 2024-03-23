@@ -15,7 +15,7 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://localhost:27017/signupapp";
+  process.env.MONGO_URI;
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -114,11 +114,21 @@ app.get("/download/:id", async (req, res) => {
   }
 });
 
+// const storage = multer.diskStorage({
+//   destination: "uploads",
+//   filename: function (req, file, callback) {
+//     const extention = file.originalname.split(".").pop();
+//     callback(null, `${file.filename}-${Date.now()}.${extention}`);
+//   },
+// });
+
+// const upload = multer({ storage: storage });
+
 const storage = multer.diskStorage({
-  destination: "uploads",
+  destination: "/tmp/uploads",
   filename: function (req, file, callback) {
-    const extention = file.originalname.split(".").pop();
-    callback(null, `${file.filename}-${Date.now()}.${extention}`);
+    const extension = file.originalname.split(".").pop();
+    callback(null, `${file.filename}-${Date.now()}.${extension}`);
   },
 });
 
