@@ -1,4 +1,4 @@
-'use client'// components/AnimatedDiv.js''
+'use client'
 import React, { ReactNode } from "react";
 import { motion } from "framer-motion";
 

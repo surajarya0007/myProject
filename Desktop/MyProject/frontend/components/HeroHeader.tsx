@@ -1,13 +1,11 @@
 'use client'
 import Image from 'next/image'
 import React from 'react'
-import { fileURLToPath } from 'url'
-import AnimatedDiv from './AnimatedDiv'
 import { motion } from "framer-motion";
 
 function HeroHeader() {
   return (
-
+    
       <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}

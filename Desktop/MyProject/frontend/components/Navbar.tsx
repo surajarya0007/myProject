@@ -8,7 +8,7 @@ import Button from "./Button";
 
 function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState();
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
