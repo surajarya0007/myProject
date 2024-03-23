@@ -1,7 +1,7 @@
-'use client'
+"use client";
 import React, { useState } from "react";
-import { Button, Progress, Space, Typography, Upload } from "antd";
-import { RcFile, UploadRequestOption } from 'antd/lib/upload/interface'; 
+import { Button, Progress, Space, Typography, Upload, UploadProps } from "antd";
+import { RcFile } from "antd/lib/upload/interface";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
@@ -10,18 +10,18 @@ interface ExtendedRcFile extends RcFile {
 }
 
 interface JwtPayload {
-  side: string; 
+  side: string;
 }
 
 function Upload3() {
   const [files, setFiles] = useState<Record<string, ExtendedRcFile>>({});
 
   // Correct the function to match expected signature
-  const handleFileUpload = (options: UploadRequestOption<any>) => {
+  const handleFileUpload: UploadProps["customRequest"] = (options) => {
     const { file } = options;
-    const extendedFile: ExtendedRcFile = file as ExtendedRcFile; // Cast to your ExtendedRcFile
+    const extendedFile: ExtendedRcFile = file as ExtendedRcFile;
 
-    setFiles(prev => ({
+    setFiles((prev) => ({
       ...prev,
       [extendedFile.uid]: extendedFile,
     }));
@@ -40,14 +40,15 @@ function Upload3() {
       },
     };
 
-    axios.post("http://localhost:5050/upload", formData, config)
-      .then(response => {
-        setFiles(prev => ({
+    axios
+      .post("http://localhost:5050/upload", formData, config)
+      .then((response) => {
+        setFiles((prev) => ({
           ...prev,
           [extendedFile.uid]: { ...extendedFile, progress: 100 },
         }));
       })
-      .catch(error => {
+      .catch((error) => {
         console.log("error", error);
       });
   };
@@ -61,21 +62,29 @@ function Upload3() {
           </span>
         </h1>
         <Space direction="vertical" className="mb-10">
-          <Upload.Dragger multiple customRequest={handleFileUpload} showUploadList={false}>
+          <Upload.Dragger
+            multiple
+            customRequest={handleFileUpload}
+            showUploadList={false}
+          >
             Drag files here OR <Button>Click to Upload</Button>
           </Upload.Dragger>
           {Object.values(files).map((file, index) => {
-        return (
-          <Space direction="vertical" key={index} className="flex ">
-            <Space>
-              <Typography>{file.name}</Typography>
-              {file.progress === 100 ? <Typography.Text type="secondary">file is Uploaded Successfully </Typography.Text> : null}
-            </Space>  
-            {/* Use a default value for progress */}
-            <Progress percent={Math.ceil(file.progress || 0)} />
-          </Space>
-        )
-      })}
+            return (
+              <Space direction="vertical" key={index} className="flex ">
+                <Space>
+                  <Typography>{file.name}</Typography>
+                  {file.progress === 100 ? (
+                    <Typography.Text type="secondary">
+                      file is Uploaded Successfully{" "}
+                    </Typography.Text>
+                  ) : null}
+                </Space>
+                {/* Use a default value for progress */}
+                <Progress percent={Math.ceil(file.progress || 0)} />
+              </Space>
+            );
+          })}
         </Space>
       </div>
     </>
