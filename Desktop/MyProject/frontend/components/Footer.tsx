@@ -13,8 +13,8 @@ const Footer = () => {
           </Link>
 
           <div className='flex flex-wrap gap-10 sm:justify-between md:flex-1'>
-            {FOOTER_LINKS.map((columns) => (
-              <FooterColumn title={columns.title}>
+            {FOOTER_LINKS.map((columns, index) => (
+              <FooterColumn title={columns.title} key={index}>
                 <ul className="regular-14 flex flex-col gap-4 text-gray-30">
                   {columns.links.map((link) => (
                     <Link href="/" key={link}>
@@ -26,7 +26,7 @@ const Footer = () => {
             ))}
 
             <div className="flex flex-col gap-5">
-              <FooterColumn title={FOOTER_CONTACT_INFO.title}>
+              <FooterColumn title={FOOTER_CONTACT_INFO.title} key="footer_contact_info">
                 {FOOTER_CONTACT_INFO.links.map((link) => (
                   <Link
                     href="/"
@@ -45,7 +45,7 @@ const Footer = () => {
             </div>
 
             <div className="flex flex-col gap-5">
-              <FooterColumn title={SOCIALS.title}>
+              <FooterColumn title={SOCIALS.title} key="socials">
                 <ul className="regular-14 flex gap-4 text-gray-30">
                   {SOCIALS.links.map((link) => (
                     <Link href="/" key={link}>
@@ -80,3 +80,5 @@ const FooterColumn = ({ title, children }: FooterColumnProps) => {
 }
 
 export default Footer
+
+

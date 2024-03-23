@@ -87,7 +87,7 @@ function Card3() {
           animate="visible"
         >
           {currentItems.map((file) => (
-            <AnimatedDiv>
+            <AnimatedDiv key={file.id}>
               <Card
                 className="h-full w-full flex flex-col justify-end rounded-3xl object-contain"
                 key={file.id}
@@ -107,7 +107,7 @@ function Card3() {
                 <div className="flex justify-between mt-auto">
                 <LikeButton photoId={file.id} />
                   <a
-                    href={`http://localhost:5050/download/${file.id}`}
+                    href={`http://localhost:5050/download/${file.id}` }
                     download
                   >
                     <Image
