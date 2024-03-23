@@ -2,12 +2,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import axios from 'axios';
+import { getLocalStorgeToken } from "../../components/getToken";
 
 
 
 const LoginPage: React.FC = () => {
   
-  const token = localStorage.getItem("token");
+  const token = getLocalStorgeToken();
   useEffect(() => {
     if (token) {
       window.location.href = "/gallery";
@@ -35,26 +36,61 @@ const LoginPage: React.FC = () => {
     });
   };
 
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   try {
+  //     if (isLogin) {
+  //       const response = await axios.post("http://localhost:5050/api/login", formData);
+  //       const { token } = response.data;
+  //       // Handle successful login
+  //       localStorage.setItem("token", token);
+  //       console.log(response.data);
+  //       window.location.reload();
+  //     } else {
+  //       const response = await axios.post("http://localhost:5050/api/admin/signup", formData);
+  //       window.location.reload();
+  //       console.log(response.data);
+  //     }
+  //   } catch (error) {
+  //     // Handle error
+  //     console.error("API Error:");
+  //   }
+  // };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      let response;
       if (isLogin) {
-        const response = await axios.post("http://localhost:5050/api/login", formData);
-        const { token } = response.data;
-        // Handle successful login
-        localStorage.setItem("token", token);
-        console.log(response.data);
-        window.location.reload();
+        response = await axios.post("http://localhost:5050/api/login", formData);
       } else {
-        const response = await axios.post("http://localhost:5050/api/admin/signup", formData);
-        window.location.reload();
-        console.log(response.data);
+        response = await axios.post("http://localhost:5050/api/admin/signup", formData);
       }
+      const { token } = response.data;
+      if (token) {
+        try {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('token', token);
+          }
+        } catch (error) {
+          console.error('Error while setting token in localStorage:', error);
+        }
+      } else {
+        try {
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('token');
+          }
+        } catch (error) {
+          console.error('Error while removing token from localStorage:', error);
+        }
+      }
+      console.log(response.data);
+      window.location.reload();
     } catch (error) {
-      // Handle error
-      console.error("API Error:");
+      console.error("API Error:", error);
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">

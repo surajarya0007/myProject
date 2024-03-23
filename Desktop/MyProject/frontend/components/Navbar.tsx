@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion"; // Import motion and AnimatePresence from framer-motion
 import { NAV_LINKS } from "../constants";
 import Button from "./Button";
+import { getLocalStorgeToken } from "./getToken";
 
 function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -12,7 +13,7 @@ function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorgeToken();
     setIsLoggedIn(!!token); // Check if token exists in local storage
   }, []);
 

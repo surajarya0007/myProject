@@ -4,6 +4,7 @@ import { Button, Progress, Space, Typography, Upload, UploadProps } from "antd";
 import { RcFile } from "antd/lib/upload/interface";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { getLocalStorgeToken } from "./getToken";
 
 interface ExtendedRcFile extends RcFile {
   progress?: number;
@@ -28,7 +29,7 @@ function Upload3() {
 
     const formData = new FormData();
     formData.append("files", extendedFile);
-    const token = localStorage.getItem("token") || "";
+    const token = getLocalStorgeToken() || "";
 
     const decoded = jwtDecode<JwtPayload>(token);
     const side = decoded.side;

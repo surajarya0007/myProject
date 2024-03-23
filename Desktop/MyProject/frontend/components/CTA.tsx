@@ -5,13 +5,14 @@ import React from "react";
 import Button from "./Button";
 import AnimatedDiv from "./AnimatedDiv";
 import Link from "next/link";
+import { getLocalStorgeToken } from "./getToken";
 
 function CTA() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // Check if token exists in local storage
+    const token = getLocalStorgeToken();
+    setIsLoggedIn(!!token);
   }, []);
 
   return (

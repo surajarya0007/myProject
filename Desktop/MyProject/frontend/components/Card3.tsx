@@ -6,6 +6,7 @@ import AnimatedDiv from "./AnimatedDiv";
 import LikeButton from "./LikeButton";
 import { jwtDecode } from "jwt-decode";
 import { Card } from "antd";
+import { getLocalStorgeToken } from "./getToken";
 
 interface FileItem {
   id: string;
@@ -24,7 +25,8 @@ function Card3() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(12);
 
-  const token = localStorage.getItem("token");
+
+  const token = getLocalStorgeToken();
 
   useEffect(() => {
     const fetchData = async () => {

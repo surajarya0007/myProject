@@ -2,6 +2,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode"; // Notice the change in import style
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { getLocalStorgeToken } from "./getToken";
 
 interface LikeButtonProps {
   photoId: string;
@@ -19,7 +20,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ photoId }) => {
   useEffect(() => {
     const fetchTotalLikes = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = getLocalStorgeToken();
         if (!token) return; // Early return if token is null
 
         const decoded = jwtDecode<JwtPayload>(token); // Type assertion here
@@ -44,7 +45,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ photoId }) => {
 
   const handleLike = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getLocalStorgeToken();
       if (!token) return; // Early return if token is null
 
       const decoded = jwtDecode<JwtPayload>(token); // Type assertion here

@@ -3,10 +3,11 @@ import React, { useEffect } from 'react'
 import Link from 'next/link'
 import Button from '../../components/Button'
 import Card3 from '../../components/Card3'
+import { getLocalStorgeToken } from '../../components/getToken'
 
 function Page() {
 
-  const token = localStorage.getItem("token");
+  const token = getLocalStorgeToken();
   useEffect(() => {
     if (!token) {
       window.location.href = "/login";
