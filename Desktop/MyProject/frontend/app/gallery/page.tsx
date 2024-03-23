@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Button from '../../components/Button'
 import Card3 from '../../components/Card3'
 
-function page() {
+function Page() {
 
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -30,4 +30,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
