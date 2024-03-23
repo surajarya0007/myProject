@@ -35,7 +35,10 @@ app.get("/fetchImages", async (req, res) => {
     const side = req.query.side;
 
     const auth = new google.auth.GoogleAuth({
-      keyFile: "cred.json",
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      },
       scopes: ["https://www.googleapis.com/auth/drive"],
     });
 
@@ -67,7 +70,10 @@ app.get("/fetchImages", async (req, res) => {
 app.get("/download/:id", async (req, res) => {
   try {
     const auth = new google.auth.GoogleAuth({
-      keyFile: "cred.json",
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      },
       scopes: ["https://www.googleapis.com/auth/drive"],
     });
 
@@ -137,7 +143,10 @@ const upload = multer({ storage: storage });
 app.post("/upload", upload.array("files"), async (req, res) => {
   try {
     const auth = new google.auth.GoogleAuth({
-      keyFile: "cred.json",
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      },
       scopes: ["https://www.googleapis.com/auth/drive"],
     });
     const drive = google.drive({
