@@ -42,7 +42,7 @@ function Upload3() {
     };
 
     axios
-      .post("hhttps://you-and-me-api.vercel.app/upload", formData, config)
+      .post("https://you-and-me-api.vercel.app/upload", formData, config)
       .then((response) => {
         setFiles((prev) => ({
           ...prev,
