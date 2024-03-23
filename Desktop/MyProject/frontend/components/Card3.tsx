@@ -33,7 +33,7 @@ function Card3() {
       if (!token) return;
       const decoded = jwtDecode<JwtPayload>(token);
       const side = decoded.side;
-      const url = new URL("http://localhost:5050/fetchImages");
+      const url = new URL("hhttps://you-and-me-api.vercel.app/fetchImages");
       url.searchParams.append("side", side);
 
       const response = await fetch(url);
@@ -116,7 +116,7 @@ function Card3() {
                 <div className="flex justify-between mt-auto">
                 <LikeButton photoId={file.id} />
                   <a
-                    href={`http://localhost:5050/download/${file.id}` }
+                    href={`hhttps://you-and-me-api.vercel.app/download/${file.id}` }
                     download
                   >
                     <Image
