@@ -21,7 +21,7 @@ function About() {
           <div className="sm:w-1/2 flex flex-col">
             <h4 className="text-2xl pb-9 font-serif">THE BRIDE</h4>
             <p className="pb-4">
-              I think the moment I knew he was “the one” was when I meet him in
+              I think the moment I knew he was “The One” was when I meet him in
               person.
             </p>
             <p>
