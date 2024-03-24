@@ -51,7 +51,7 @@ function About2() {
       </AnimatedDiv>
       <AnimatedDiv>
         <h4 className="text-2xl pb-2 font-serif py-9">Made Using</h4>
-      <motion.div variants={container} initial="hidden" animate="visible" className="grid grid-cols-3 lg:grid-cols-4 md:gap-10 gap-4 py-9">
+      <motion.div variants={container} initial="hidden" animate="visible" className="grid grid-cols-2 lg:grid-cols-4 md:gap-10 gap-4 py-9">
         {cardList2.map((card, index) => (
           <motion.div key={index} variants={item} className="flex justify-center items-center h-24 w-24 sm:h-32 sm:w-32">
             <Image 
