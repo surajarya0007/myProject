@@ -20,7 +20,7 @@ function Page() {
       <Link href="/uplode">
           <Button
           type='button'
-          title='Uplode'
+          title='Upload'
           variant='btn_2'
           />
       </Link>

@@ -10,30 +10,24 @@ function Card2() {
 
   const scrollLeft = () => {
     if (cardContainerRef.current) {
-      cardContainerRef.current.scrollBy({
-        left: -200,
-        behavior: 'smooth',
-      });
+      cardContainerRef.current.scrollLeft -= 200;
     }
   };
 
   const scrollRight = () => {
     if (cardContainerRef.current) {
-      cardContainerRef.current.scrollBy({
-        left: 200,
-        behavior: 'smooth',
-      });
+      cardContainerRef.current.scrollLeft += 200;
     }
   };
 
   return (
     <div className="container mx-auto relative">
-      <div className="flex gap-2 sm:gap-4 overflow-x-auto" ref={cardContainerRef}>
+      <div className="flex gap-3  overflow-x-auto" ref={cardContainerRef} style={{ scrollBehavior: 'smooth' }}>
         {cardList.map((card, index) => (
-          <motion.div 
+          <div 
             key={index} 
-            className="shadow-lg rounded-3xl bg-white w-full h-full"
-            layoutId={card.img}
+            className="shadow-lg rounded-3xl bg-white"
+            style={{ width: '150px', flexShrink: 0 }}
             onClick={() => setSelectedId(card.img)}
           >
             <Image 
@@ -43,7 +37,7 @@ function Card2() {
               height={200}
               width={200}
             />
-          </motion.div>
+          </div>
         ))}
       </div>
       <button
