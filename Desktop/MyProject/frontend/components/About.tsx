@@ -14,33 +14,41 @@ function About() {
       </AnimatedDiv>
       <hr />
       <AnimatedDiv>
-        <div className="text-center flex items-center justify-center py-10">
-          <div className="w-1/2 flex flex-col justify-center ">
+        <div className="text-center flex flex-col sm:flex-row items-center justify-center py-10 space-y-4 space-x-5">
+          <div className="">
+            <Image src="/bride.png" alt="" width={170} height={100} />
+          </div>
+          <div className="sm:w-1/2 flex flex-col">
             <h4 className="text-2xl pb-9 font-serif">THE BRIDE</h4>
             <p className="pb-4">
-              I think the moment I knew he was “the one” was when I meet him in person.
+              I think the moment I knew he was “the one” was when I meet him in
+              person.
             </p>
             <p>
-             Our destined love story blossomed despite distance, founded on mutual respect and care. Now, eagerly waiting to anticipate a joyous family future together.❣️
+              Our destined love story blossomed despite distance, founded on
+              mutual respect and care. Now, eagerly waiting to anticipate a
+              joyous family future together.❣️
             </p>
-          </div>
-          <div className="">
-            <Image src="/bride.png" alt="" width={250} height={100} />
           </div>
         </div>
       </AnimatedDiv>
 
       <AnimatedDiv>
-        <div className="flex justify-center pb-10">
-          <div>
-            <Image src="/groom.png" alt="" width={300} height={100} />
+        <div className="text-center flex flex-col sm:flex-row items-center justify-center pb-10 space-y-4 space-x-5">
+          <div className="flex">
+            <Image src="/groom.png" alt="" width={220} height={100} />
           </div>
-          <div className="text-center w-1/2 flex flex-col justify-center ">
+          <div className="sm:w-1/2 flex flex-col">
             <h4 className="text-2xl pb-9 font-serif">THE GROOM</h4>
             <p className="pb-4">
-            What can I say, she is pretty much the same in nature just like me, at first meeting, everything was so awkward but I still liked her.
+              What can I say, she is pretty much the same in nature just like
+              me, at first meeting, everything was so awkward but I still liked
+              her.
             </p>
-            <p>She is going to be a great wife because she does everything with her whole heart.</p>
+            <p>
+              She is going to be a great wife because she does everything with
+              her whole heart.
+            </p>
           </div>
         </div>
       </AnimatedDiv>

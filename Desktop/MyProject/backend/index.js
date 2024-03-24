@@ -58,7 +58,7 @@ app.get("/fetchImages", async (req, res) => {
 
     const response = await drive.files.list({
       q: folderId,
-      fields: "files(id, name, webViewLink, thumbnailLink, mimeType)",
+      fields: "files(id, name, webViewLink, webContentLink, thumbnailLink, mimeType)",
     });
 
     res.json({ files: response.data.files });

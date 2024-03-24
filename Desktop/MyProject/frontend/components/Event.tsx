@@ -37,7 +37,7 @@ function Event() {
       </div>
       <div className='sticky top-0 h-[100vh] '>  
         <div className='w-full h-full absolute top-0 flex items-center justify-center'>
-          <motion.div style={{scale: scale4}} className='w-[25vw] h-[25vh] lg:w-[50vw] lg:h-[70vh] relative '>
+          <motion.div style={{scale: scale4}} className='w-[26vw] h-[22vh] lg:w-[50vw] lg:h-[70vh] relative '>
             <Image 
               className='object-cover'
               src="/ganesh.png" 

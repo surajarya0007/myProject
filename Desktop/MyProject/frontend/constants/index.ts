@@ -2,25 +2,58 @@ export const NAV_LINKS = [
     { href: '/', key: 'home', label: 'Home' },
     { href: '/gallery', key: 'gallery', label: 'Gallery' },
     { href: '/events', key: 'events', label: 'Events' },
-    { href: '/contact', key: 'contact', label: 'Contact' },
+    { href: '/about', key: 'about', label: 'About' },
 ];
 export const cardList = [
-    {
+    {   id:1,
         img: "/images/1.jpg",
         userName: "Suraj",
     },
-    {
+    {   id:2,
         img: "/images/2.jpg",
         userName: "Sonam",
     },
-    {
+    {   id:3,
         img: "/images/3.jpg",
         userName: "Sonam",
     },
-    {
+    {   id:4,
         img: "/images/4.jpg",
         userName: "Ayush",
     }
+]
+
+export const cardList2 = [
+  {   id:1,
+      img: "/logos/1.png",
+  },
+  {   id:2,
+      img: "/logos/2.png",
+  },
+  {   id:3,
+      img: "/logos/3.png",
+  },
+  {   id:4,
+      img: "/logos/4.png",
+  },
+  {   id:5,
+    img: "/logos/5.png",
+  },
+  {   id:6,
+    img: "/logos/6.png",
+  },
+  {   id:7,
+    img: "/logos/7.png",
+  },
+  {   id:8,
+    img: "/logos/8.png",
+  },
+  {   id:9,
+    img: "/logos/9.png",
+  },
+  {   id:10,
+    img: "/logos/10.png",
+  },
 ]
 
 export const FOOTER_LINKS = [

@@ -24,15 +24,10 @@ function CTA() {
               Capture Your Wedding Memories Here
             </span>
           </h1>
-          <p className="text-sm font-normal text-gray-500 lg:text-xl dark:text-gray-700 pb-10">
-            Sign up or log in to upload your wedding photos and view the
-            invitation
-          </p>
-
           <div className="space-y-2 space-x-2">
             {isLoggedIn ? (
-              <Link href="/gallery">
-                <Button type="button" title="Check" variant="btn_2" />
+              <Link href="/uplode">
+                <Button type="button" title="Upload" variant="btn_2" />
               </Link>
             ) : (
               <Link href="/login">

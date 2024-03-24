@@ -103,7 +103,7 @@ function Navbar() {
             animate="visible"
             exit="hidden" // Animation when menu is hidden
           >
-            <ul className="flex flex-col items-center py-5 justify-center space-y-20 text-2xl font-serif h-screen">
+            <ul className="flex flex-col items-center justify-center space-y-20 pb-20 text-2xl font-serif h-screen">
               {NAV_LINKS.map((link, index) => (
                 <motion.li
                   className={selectedIndex === index ? "text-4xl" : ""}
@@ -121,7 +121,7 @@ function Navbar() {
               <motion.li className=" lg:hidden">
                 {isLoggedIn ? (
                   <button
-                    className="bg-pink-700 px-6 py-2 text-white hover:bg-pink-900 gap-20 items-center justify-center rounded-full border"
+                    className="bg-pink-700 px-6 py-2 text-white hover:bg-pink-900 items-center justify-center rounded-full border"
                     onClick={() => {
                       handleLogout();
                       toggleMenu;

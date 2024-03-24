@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode"; // Notice the change in import style
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { getLocalStorgeToken } from "./getToken";
+import { motion } from "framer-motion";
 
 interface LikeButtonProps {
   photoId: string;
@@ -66,17 +67,21 @@ const LikeButton: React.FC<LikeButtonProps> = ({ photoId }) => {
   };
 
   return (
-    <div className="flex flex-row items-center">
+    <motion.div 
+      className="box flex flex-row items-center"
+      whileHover={{ scale: 1.2 }}
+      whileTap={{ scale: 0.9 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+    >
       <Image
         onClick={handleLike}
-        className={`hover:bg-red-100 ${liked ? "bg-red-600" : ""}`}
         src={pic}
         alt="Like"
         width={22}
         height={22}
       />
       <div>{likes > 0 && <span className="ml-1">{likes}</span>}</div>
-    </div>
+    </motion.div>
   );
 };
 

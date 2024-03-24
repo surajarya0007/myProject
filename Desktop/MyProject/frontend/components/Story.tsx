@@ -13,7 +13,7 @@ function Story() {
       </span>
     </h1>
     </AnimatedDiv>
-      <Image src="/rest.png" alt='' width={900} height={100} />
+      <Image src="/rest2.png" alt='' width={220} height={200} />
       <div className='flex flex-col w-9/12 py-9 text-center'>
       <p className='py-4'>We met through relatives and family suggestions, before meeting her I used to think god had not created someone for me but now I think she is the one and destiny brought us together.</p>
       <p>I feel m in love with her I care about her and the whole family. I already picture a great happy and prosperous future ahead with her.</p>
