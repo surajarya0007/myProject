@@ -16,7 +16,7 @@ function About() {
       <AnimatedDiv>
         <div className="text-center flex flex-col sm:flex-row items-center justify-center py-10 space-y-4 space-x-5">
           <div className="">
-            <Image src="/bride.png" alt="" width={170} height={100} />
+            <Image src="/bride2.png" alt="" width={290} height={200} />
           </div>
           <div className="sm:w-1/2 flex flex-col">
             <h4 className="text-2xl pb-9 font-serif">THE BRIDE</h4>
