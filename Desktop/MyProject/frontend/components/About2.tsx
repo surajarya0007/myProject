@@ -36,14 +36,14 @@ function About2() {
           <div className="sm:w-1/2 flex flex-col space-y-7">
             <h4 className="text-2xl pb-2 font-serif">Website</h4>
             <p className="">
-              It's an invitation to the guests for my sister's wedding.
+              It is an invitation to the guests for my sister wedding.
             </p>
             <p>
               To make this wedding memorable, guests are requested to share
               their moments either in the form of an image, video, or file on this site.
             </p>
             <p>
-              There is "NO LIMIT" on uploads. This site will be the virtual
+              There is NO LIMIT on uploads. This site will be the virtual
               Wedding Album for the Bride and Groom.
             </p>
           </div>
