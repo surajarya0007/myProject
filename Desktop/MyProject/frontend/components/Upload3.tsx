@@ -81,8 +81,7 @@ function Upload3() {
                     </Typography.Text>
                   ) : null}
                 </Space>
-                {/* Use a default value for progress */}
-                <Progress percent={Math.ceil(file.progress || 0)} />
+                <Progress percent={Math.ceil(file.progress || 10)} />
               </Space>
             );
           })}
