@@ -14,7 +14,7 @@ const AnimatedDiv = ({ children }: { children: ReactNode }) => {
       controls.start('hidden');
     }
   }, [controls, inView]);
-
+// hii
   return (
     <motion.div
       ref={ref}
