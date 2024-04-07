@@ -27,7 +27,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ photoId }) => {
         const decoded = jwtDecode<JwtPayload>(token); // Type assertion here
         const userId = decoded.email;
 
-        const response = await axios.get(`https://you-and-me-api.vercel.app/api/totalLikes/${photoId}`, { params: { userId } });
+        const response = await axios.get(`https://api-three-murex.vercel.app/api/totalLikes/${photoId}`, { params: { userId } });
         if (!response.data.userExists) {
           setLiked(false);
         } else {
@@ -52,7 +52,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ photoId }) => {
       const decoded = jwtDecode<JwtPayload>(token); // Type assertion here
       const userId = decoded.email;
 
-      const response = await axios.post(`https://you-and-me-api.vercel.app/api/like/${photoId}`, { userId });
+      const response = await axios.post(`https://api-three-murex.vercel.app/api/like/${photoId}`, { userId });
 
       if (!response.status) {
         throw new Error(`Failed to like photo with status ${response.status}`);

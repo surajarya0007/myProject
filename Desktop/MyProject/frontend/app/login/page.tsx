@@ -40,14 +40,14 @@ const LoginPage: React.FC = () => {
   //   e.preventDefault();
   //   try {
   //     if (isLogin) {
-  //       const response = await axios.post("https://you-and-me-api.vercel.app/api/login", formData);
+  //       const response = await axios.post("https://api-three-murex.vercel.app/api/login", formData);
   //       const { token } = response.data;
   //       // Handle successful login
   //       localStorage.setItem("token", token);
   //       console.log(response.data);
   //       window.location.reload();
   //     } else {
-  //       const response = await axios.post("https://you-and-me-api.vercel.app/api/admin/signup", formData);
+  //       const response = await axios.post("https://api-three-murex.vercel.app/api/admin/signup", formData);
   //       window.location.reload();
   //       console.log(response.data);
   //     }
@@ -62,9 +62,9 @@ const LoginPage: React.FC = () => {
     try {
       let response;
       if (isLogin) {
-        response = await axios.post("https://you-and-me-api.vercel.app/api/login", formData);
+        response = await axios.post("https://api-three-murex.vercel.app/api/login", formData);
       } else {
-        response = await axios.post("https://you-and-me-api.vercel.app/api/admin/signup", formData);
+        response = await axios.post("https://api-three-murex.vercel.app/api/admin/signup", formData);
       }
       const { token } = response.data;
       if (token) {
