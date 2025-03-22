@@ -62,7 +62,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ photoId }) => {
       setPic(liked ? "/like-blank.png" : "/like-red.jpeg");
       setLiked(!liked);
     } catch (error) {
-      console.error("Error liking photo:", error);
+      console.error("Error liking photo : - ", error);
     }
   };
 
