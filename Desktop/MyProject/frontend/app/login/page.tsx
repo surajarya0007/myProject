@@ -11,7 +11,7 @@ const LoginPage: React.FC = () => {
   const token = getLocalStorgeToken();
   useEffect(() => {
     if (token) {
-      window.location.href = "/gallery";
+      window.location.href = "/home";
     }
 }, [token]);
 
