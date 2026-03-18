@@ -18,6 +18,12 @@
 
 // next.config.mjs
 const nextConfig = {
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = { poll: 1000, ignored: /node_modules/ };
+    }
+    return config;
+  },
   images: {
     domains: ['lh3.googleusercontent.com', 'drive.google.com'],
     remotePatterns: [

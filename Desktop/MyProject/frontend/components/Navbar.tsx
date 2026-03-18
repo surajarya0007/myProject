@@ -48,7 +48,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full  bg-transparent backdrop-blur-md border-b-2 transition-opacity z-50 lg:rounded-full">
+    <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm border-b border-pink-100 transition-all z-50 shadow-sm shadow-pink-50">
       <div className="flex justify-between lg:items-center items-start px-8">
         <div className="flex">
           <Link href="/">
@@ -60,10 +60,10 @@ function Navbar() {
             />
           </Link>
         </div>
-        <div className="lg:flex hidden space-x-10 text-xl font-serif">
+        <div className="lg:flex hidden space-x-10 text-xl font-heading">
           {NAV_LINKS.map((link, index) => (
             <Link
-              className={selectedIndex === index ? "text-2xl " : ""}
+              className={`transition-colors hover:text-pink-600 ${selectedIndex === index ? "text-pink-600 font-semibold" : "text-gray-700"}`}
               href={link.href}
               key={link.key}
               onClick={() => {

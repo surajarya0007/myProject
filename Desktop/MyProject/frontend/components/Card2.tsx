@@ -41,16 +41,18 @@ function Card2() {
         ))}
       </div>
       <button
-        className="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-200 p-2 rounded-full"
+        className="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gradient-to-r from-pink-500 to-purple-500 text-white p-2 rounded-full shadow-md hover:shadow-pink-300 hover:scale-105 transition-all"
         onClick={scrollLeft}
+        aria-label="Scroll left"
       >
-        {'<'}
+        {'‹'}
       </button>
       <button
-        className="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-200 p-2 rounded-full"
+        className="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gradient-to-r from-pink-500 to-purple-500 text-white p-2 rounded-full shadow-md hover:shadow-pink-300 hover:scale-105 transition-all"
         onClick={scrollRight}
+        aria-label="Scroll right"
       >
-        {'>'}
+        {'›'}
       </button>
 
       <AnimatePresence>

@@ -4,55 +4,74 @@ import AnimatedDiv from "./AnimatedDiv";
 
 function About() {
   return (
-    <div className=" flex flex-col justify-center items-center py-20 px-8 bg-gradient-to-t from-red-50 to-purple-50">
+    <section className="flex flex-col items-center py-20 px-8 bg-white/50 backdrop-blur-sm">
       <AnimatedDiv>
-        <h1 className=" mb-4 text-4xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl pb-5">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r to-purple-400 from-pink-600 ">
+        <h2 className="mb-2 text-center font-heading text-4xl font-semibold md:text-5xl lg:text-6xl">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-400">
             About Us
           </span>
-        </h1>
-      </AnimatedDiv>
-      <hr />
-      <AnimatedDiv>
-        <div className="text-center flex flex-col sm:flex-row items-center justify-center py-10 space-y-4 space-x-5">
-          <div className="">
-            <Image src="/bride2.png" alt="" width={290} height={200} />
-          </div>
-          <div className="sm:w-1/2 flex flex-col">
-            <h4 className="text-2xl pb-9 font-serif">THE BRIDE</h4>
-            <p className="pb-4">
-              I think the moment I knew he was “The One” was when I meet him in
-              person.
-            </p>
-            <p>
-              Our destined love story blossomed despite distance, founded on
-              mutual respect and care. Now, eagerly waiting to anticipate a
-              joyous family future together.❣️
-            </p>
-          </div>
-        </div>
+        </h2>
+        <div className="mx-auto mb-10 h-px w-24 bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
       </AnimatedDiv>
 
-      <AnimatedDiv>
-        <div className="text-center flex flex-col sm:flex-row items-center justify-center pb-10 space-y-4 space-x-5">
-          <div className="flex">
-            <Image src="/groom.png" alt="" width={220} height={100} />
-          </div>
-          <div className="sm:w-1/2 flex flex-col">
-            <h4 className="text-2xl pb-9 font-serif">THE GROOM</h4>
-            <p className="pb-4">
-              What can I say, she is pretty much the same in nature just like
-              me, at first meeting, everything was so awkward but I still liked
-              her.
-            </p>
-            <p>
-              She is going to be a great wife because she does everything with
-              her whole heart.
-            </p>
-          </div>
-        </div>
-      </AnimatedDiv>
-    </div>
+      <div className="grid w-full max-w-4xl gap-8 sm:grid-cols-2">
+        {/* Bride card */}
+        <AnimatedDiv>
+          <article className="group flex flex-col overflow-hidden rounded-2xl border border-pink-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-200">
+            <div className="relative flex h-72 w-full items-center justify-center bg-gradient-to-b from-purple-50 to-pink-50 p-4">
+              <Image
+                src="/bride2.png"
+                alt="The Bride"
+                width={290}
+                height={260}
+                className="h-full w-auto object-contain"
+              />
+            </div>
+            <div className="flex flex-col p-6">
+              <h3 className="font-heading text-2xl font-semibold">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-400">
+                  The Bride
+                </span>
+              </h3>
+              <p className="mt-3 leading-relaxed text-gray-600">
+                I think the moment I knew he was &quot;The One&quot; was when I met him in person.
+              </p>
+              <p className="mt-2 leading-relaxed text-gray-500">
+                Our destined love story blossomed despite distance, founded on mutual respect and care. Now, joyously living our family future together.❣️
+              </p>
+            </div>
+          </article>
+        </AnimatedDiv>
+
+        {/* Groom card */}
+        <AnimatedDiv>
+          <article className="group flex flex-col overflow-hidden rounded-2xl border border-pink-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-200">
+            <div className="relative flex h-72 w-full items-center justify-center bg-gradient-to-b from-purple-50 to-pink-50 p-4">
+              <Image
+                src="/groom.png"
+                alt="The Groom"
+                width={220}
+                height={260}
+                className="h-full w-auto object-contain"
+              />
+            </div>
+            <div className="flex flex-col p-6">
+              <h3 className="font-heading text-2xl font-semibold">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-400">
+                  The Groom
+                </span>
+              </h3>
+              <p className="mt-3 leading-relaxed text-gray-600">
+                What can I say, she is pretty much the same in nature just like me — at first meeting everything was so awkward but I still liked her.
+              </p>
+              <p className="mt-2 leading-relaxed text-gray-500">
+                She is going to be a great wife because she does everything with her whole heart.
+              </p>
+            </div>
+          </article>
+        </AnimatedDiv>
+      </div>
+    </section>
   );
 }
 

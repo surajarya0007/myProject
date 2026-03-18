@@ -6,15 +6,16 @@ import AnimatedDiv from "./AnimatedDiv";
 
 function Gallery() {
   return (
-    <section className="py-20 px-8 bg-gradient-to-t from-red-50 to-purple-50">
+    <section className="py-20 px-8 bg-transparent">
       <AnimatedDiv>
-        <div className="flex flex-col justify-center items-center pb-10 text-center">
-          <h1 className="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl pb-5">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r to-purple-400 from-pink-600 ">
+        <div className="flex flex-col items-center pb-10 text-center">
+          <h2 className="mb-2 font-heading text-4xl font-semibold md:text-5xl lg:text-6xl">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-400">
               Wedding Memories
             </span>
-          </h1>
-          <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-800 pb-10">
+          </h2>
+          <div className="mx-auto mb-6 h-px w-24 bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
+          <p className="text-lg font-body text-gray-500 lg:text-xl pb-6 max-w-xl">
             Browse through beautiful wedding photos uploaded by our guests.
           </p>
           <Link href="/gallery">

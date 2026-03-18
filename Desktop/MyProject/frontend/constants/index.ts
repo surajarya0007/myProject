@@ -1,3 +1,6 @@
+// Wedding day — 13 April 2024
+export const WEDDING_DATE = new Date('2024-04-13T00:00:00');
+
 export const NAV_LINKS = [
     { href: '/', key: 'home', label: 'Home' },
     { href: '/gallery', key: 'gallery', label: 'Gallery' },
@@ -86,32 +89,35 @@ export const FOOTER_LINKS = [
     {
       title: 'Learn More',
       links: [
-        'About You and Me',
-        'Guide',
-        'Privacy Policy',
+        { label: 'About You and Me', href: '/about#about' },
+        { label: 'Guide', href: '/about#guide' },
+        { label: 'Privacy Policy', href: '/about#privacy' },
       ],
     },
     {
       title: 'Our Community',
-      links: ['Frontend Team', 'Backend Team', 'Production Team'],
+      links: [
+        { label: 'Frontend Team', href: '/about#team' },
+        { label: 'Backend Team', href: '/about#team' },
+        { label: 'Production Team', href: '/about#team' },
+      ],
     },
   ];
   
   export const FOOTER_CONTACT_INFO = {
     title: 'Contact Us',
     links: [
-      { label: 'Admin Officer', value: '8931013317' },
-      { label: 'Email Officer', value: 'aryasuraj351@gmail.com' },
+      { label: 'Phone', value: '8931013317', href: 'tel:8931013317' },
+      { label: 'Email', value: 'aryasuraj351@gmail.com', href: 'mailto:aryasuraj351@gmail.com' },
     ],
   };
   
   export const SOCIALS = {
     title: 'Social',
     links: [
-      '/instagram.svg',
-      '/twitter.svg',
-      '/youtube.svg',
+      { icon: '/instagram.svg', href: 'https://instagram.com', label: 'Instagram' },
+      { icon: '/twitter.svg', href: 'https://twitter.com', label: 'Twitter' },
+      { icon: '/youtube.svg', href: 'https://youtube.com', label: 'YouTube' },
     ],
   };
-
 
